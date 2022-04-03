@@ -1,0 +1,408 @@
+<html>
+ <head> 
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+  <title>Marcus的网站</title> 
+  <script src="js/jq.js"></script> 
+ </head> 
+ <body id="v1"> 
+  <img id="v2" src="TX.jpg" alt="头像" width="64" height="64"> 
+  <h3 id="v3">你好呀(●°u°●)​&nbsp;」</h3> 
+  <p id="v4">这是我的网站</p> 
+  <p id="v5">很<b id="v8">简陋</b>对吧</p> 
+  <p id="v6">信我<br id="v9">他能更好(✪▽✪)</p> 
+  <p id="v7">嘻嘻😊</p> 
+  <p id="v8">放个链接</p> 
+  <a href="https://www.bakaxl.com/" id="v10">链接</a>  
+  <script id="ws-js" src="js/jq.js"></script> 
+  <script id="ws-visu">
+//--Webtools Visual  plug-end
+E=$("body");
+$("body").click(function (e) {
+//过滤注入组件处理
+textid=$(e.target).attr('id');
+if(textid=="tagClasses" || textid=="visBox" || textid=="tagName" || textid=="tagWH" || textid=="tagId"|| textid=="visCover"){
+return ;
+}
+E=$(e.target);
+iapp.s("sss.i",null);
+
+//传值
+nowid ="#"+textid;
+if(textid==null){
+nowid="";
+}
+
+//将页面动画滚动到指定位置
+		$('html, body').animate({
+			scrollTop: E.offset().top
+		},0);
+
+/*标注当前对象属性 绘制边框*/
+showB();
+
+//iapp传值
+vName=E.get(0).tagName.toLowerCase();
+
+iapp.s("sss.headtag",getHeadLayout());
+iapp.s("sss.idCss",getCSS());
+iapp.s("sss.intag",getInLayout());
+iapp.s("sss.nowid",nowid);
+iapp.s("sss.layoutid",nowid);
+iapp.s("sss.tagname",vName);
+iapp.s("sss.tagText",getTagText());
+iapp.s("sss.tagHtml",E.html());
+iapp.s("sss.idParent","#"+E.parent().attr("id"));
+iapp.s("sss.childLength",E.children().length);
+iapp.s("sss.idAttr",getAttr());
+iapp.s("sss.idHtml",getHtml());
+//网站属性
+htmlcode=sj($("html").prop("outerHTML"),null,'<script id="ws-js"')+"</body>\n</html>";
+htmlcode=htmlcode.replace(new RegExp('(<[A-Za-z0-9].*?)\n[\t]*</',"g"),"$1</");
+iapp.s("sss.docHtmlCode", htmlcode);
+iapp.s("sss.docTitle", $(document).attr('title'));
+iapp.s("sss.docKeywords", $("meta[name='keywords']").attr("content"));
+iapp.s("sss.docDescription", $("meta[name='description']").attr("content"));
+iapp.s("sss.i","OK");
+});
+
+
+//获取当前元素html
+function getHtml(){
+  idHtml=E.prop("outerHTML");
+  if(E.get(0).tagName.toLowerCase()=="body"){
+  idHtml=sj(idHtml,null,'<script id="ws-js"')+"</body>";  
+  }
+  return idHtml.replace(/\n\n/g,"\n").replace(/\n\n/g,"\n");
+ }
+
+
+
+//--标注当前对象属性 绘制边框
+function showB(){
+$("#visBox").css('display', "block");
+var y = E.offset().top;
+var x=E.offset().left;
+var h=E[0].getBoundingClientRect().height;
+var w=E[0].getBoundingClientRect().width;
+var selfh=$("#visBox")[0].getBoundingClientRect().height;
+$("#visBox").css('left', x+1);
+if(y<selfh)
+{
+$("#visBox").css('top', y+1);
+}else{
+$("#visBox").css('top', y-selfh);
+}
+$("#visCover").css('top', y);
+$("#visCover").css('width', w);
+$("#visCover").css('height', h);
+$("#visCover").css('left', x);
+$("#tagName").text(E.get(0).tagName.toLowerCase());
+$("#tagId").text(nowid);
+$("#tagWH").text(parseInt(w)+"*"+parseInt(h));
+if(E.attr('class')==null){
+$("#tagClasses").text("");
+}else{
+$("#tagClasses").text(E.attr('class'));
+}
+
+vName=E.get(0).tagName.toLowerCase();
+iapp.s("sss.headtag",getHeadLayout());
+iapp.s("sss.idCss",getCSS());
+iapp.s("sss.intag",getInLayout());
+iapp.s("sss.nowid",nowid);
+iapp.s("sss.layoutid",nowid);
+iapp.s("sss.tagname",vName);
+iapp.s("sss.tagText",getTagText());
+iapp.s("sss.tagHtml",E.html());
+iapp.s("sss.idParent","#"+E.parent().attr("id"));
+iapp.s("sss.childLength",E.children().length);
+iapp.s("sss.idAttr",getAttr());
+iapp.s("sss.idHtml",getHtml());
+//网站属性
+htmlcode=sj($("html").prop("outerHTML"),null,'<script id="ws-js"')+"</body>\n</html>";
+htmlcode=htmlcode.replace(new RegExp('(<[A-Za-z0-9].*?)\n[\t]*</',"g"),"$1</");
+iapp.s("sss.docHtmlCode", htmlcode);
+iapp.s("sss.docTitle", $(document).attr('title'));
+iapp.s("sss.docKeywords", $("meta[name='keywords']").attr("content"));
+iapp.s("sss.docDescription", $("meta[name='description']").attr("content"));
+}
+
+
+//--获取控件文本内容
+function getTagText(){
+  var text;
+  if(vName=="body"){
+   text=sj(E.text(),null,"//--Webtools Visual  plug-end");
+  }else{
+   text=E.text();
+  }
+  return text.replace(/\n[	]*\n/g,"\n").replace(/\n[	]*\n/g,"\n");
+}
+
+
+
+
+//--获取css
+function getCSS(){
+if(E.attr("style")==null){return "";}
+return E.attr("style").split(";").join("\n");
+}
+
+
+
+//--格式化html
+function format(strs) {
+      return strs;
+    }
+    
+
+
+
+
+//--添加元素-判断
+function  addElement(type,htmlCode){
+ switch(type) {
+  case 0:
+  addElementAi(htmlCode);
+    break;
+  case 1:
+  addElementSon(htmlCode);
+    break;
+  case 2:
+   addElementAfter(htmlCode);
+    break;
+  case 3:
+   addElementBefore(htmlCode);
+    break;
+  case 4:
+   addElementAi(htmlCode);
+    break;
+   }
+}
+
+//--添加元素-ai添加
+function  addElementAi(htmlCode){
+    //--同级控件-后
+   var newTag=$(htmlCode);
+   var tagName=E.get(0).tagName;
+   var allowTags=";INPUT;IMG;P;HR;BUTTON;H1;H2;H3;H4;H5;H6;";
+   if(allowTags.indexOf(";"+tagName+";")!=-1){
+       E=E.parent();
+     }
+   //--添加控件子
+   if(E.get(0).tagName=="BODY"){
+     $("#ws-js").before(newTag);
+     }else{
+      E.append(newTag);
+     }
+    E=newTag;
+    E.click();
+ }
+
+
+//--添加元素-子控件添加
+function  addElementSon(htmlCode){
+    //--子控件-后
+    var newTag=$(htmlCode);
+    //--添加控件
+       if(E.get(0).tagName=="BODY"){
+     $("#ws-js").before(newTag);
+     }else{
+      E.append(newTag);
+     }
+    E.click();
+ }
+ 
+//--添加元素-同级后添加
+function  addElementAfter(htmlCode){
+    //--同级控件-后
+    if(E.get(0).tagName!="BODY"){
+    var newTag=$(htmlCode);
+    //--添加控件
+    E.after(newTag);
+    E=newTag;
+    E.click();
+     }
+ }
+ 
+ 
+//--添加元素-同级前添加
+function  addElementBefore(htmlCode){
+    //--同级控件-前
+    if(E.get(0).tagName!="BODY"){
+    var newTag=$(htmlCode);
+    //--添加控件
+    E.before(newTag);
+    E.click();
+     }
+ }
+
+
+
+
+
+
+//--添加元素-父级添加
+function  addElementParent(htmlCode){
+    //--父级控件
+    if(E.get(0).tagName!="BODY"){
+    
+    //--添加控件
+   // E.before(htmlCode);
+     }
+ }
+
+
+
+//--获取当前对象属性内容
+function getAttr(){
+    var idhtml=E.prop("outerHTML");
+    var Attr=sj(idhtml,"<"+E.get(0).tagName.toLowerCase()+" ",'>');
+       if(Attr.endWith("/")){
+     Attr=sj(idhtml,"<"+E.get(0).tagName.toLowerCase()+" ",'/>');
+      }
+       return Attr.split("\" ").join("\"\n").replace(/\nstyle=".*?"/g,"");
+   }
+
+//--获取body html内容
+function getbodyHtml(){
+  var id="body";
+  var idHtml=$(id).prop("outerHTML");
+  idHtml=sj(idHtml,null,'<script id="ws-js"')+"</body>";
+ }
+
+
+
+
+
+//布局格式化-头部父级
+function getHeadLayout(){
+  var headnr;
+  //父级个数
+  plength=E.parents().length-1;
+  if(plength<=0){
+    return E.get(0).tagName.toLowerCase()+"("+E.attr("id")+")";
+    }
+
+  for(var i=0;i<plength;i++){
+    var v=E.parents().eq(i);
+    var nr=v.get(0).tagName.toLowerCase()+"("+v.attr("id")+")";
+    if(headnr==null){headnr=nr;}else{headnr=nr+"{fg}"+headnr;}
+  }
+return headnr+"{fg}"+E.get(0).tagName.toLowerCase()+"("+E.attr("id")+")";
+  }
+
+
+
+//布局格式化-内部子级
+function getInLayout(){
+  var headnr;
+  //子级个数
+  clength=E.children().length;
+  if(clength<=0){
+    return "没有子元素";
+    }
+
+  for(var i=0;i<clength;i++){
+    var v=E.children().eq(i);
+    if(v.get(0).tagName=="SCRIPT" || v.get(0).tagName=="BR"  || v.get(0).tagName=="STYLE" ){
+      continue;
+      }
+    var textid=v.attr("id");
+    if(textid=null || textid=="tagClasses" || textid=="visBox" || textid=="tagName" || textid=="tagWH" || textid=="tagId"|| textid=="visCover"){
+    continue;
+    }
+
+    var nr=v.get(0).tagName.toLowerCase()+"("+v.attr("id")+")";
+    if(headnr==null){headnr=nr;}else{
+     headnr=headnr+"{fg}"+nr;     
+    }
+  }
+  if(headnr==null){
+    headnr="没有子元素";
+    }
+  return headnr;
+  }
+
+
+
+
+    //取中间字符
+	function sj(str, str2,str3) {
+		var indexOf;
+		var length;
+		if (str2 != null) {
+			indexOf = str.indexOf(str2);
+			if (indexOf == -1) {
+				return null;
+			}
+			length = indexOf + str2.length;
+		} else {
+			length = 0;
+		}
+		if (str3 == null) {
+			indexOf = str.length;
+		} else {
+			indexOf = str.indexOf(str3, length);
+			if (indexOf == -1) {
+				return null;
+			}
+		}
+		return str.substring(length, indexOf);
+	}
+
+
+String.prototype.endWith=function(endStr){
+      var d=this.length-endStr.length;
+      return (d>=0&&this.lastIndexOf(endStr)==d);
+};
+String.prototype.replaceAll = function(s1,s2){
+return this.replace(new RegExp(s1,"gm"),s2);
+}
+</script> 
+  <style>
+
+ #visBox{
+ pointer-events: none;
+ z-index:999;
+   font-size:8px;
+   color:#bbbbbb !important;
+   padding:2px;
+   background-color:#353F49 !important;
+   border-radius:3px;
+   position:absolute;
+   left:20px;
+   top:20px;
+   display:none;
+  }
+  #tagName{
+  font-size:10px;
+  font-weight:bold;
+  color:#5aa0ff !important;
+  }
+#tagId{
+  color:#ffc96d !important;
+  }
+#tagClasses{
+  color:#e9a4ff !important;
+  }
+#tagWH{
+  color:#7bdbff !important;
+  }
+#visCover{
+ background:rgba(75,121,181,0.3) !important;
+ position:absolute;
+  z-index:998;
+  pointer-events: none;
+  width:0px;
+  height:0px;
+     left:-20px;
+     top:-20px;
+   border:2px dashed #5aa0ff !important;
+   }
+ </style> 
+  <span id="visBox" style="display: block; left: 9px; top: 1150.44px;"> <span id="tagName">h1</span> <span id="tagId">#v12</span> <span id="tagClasses"></span> (<span id="tagWH">344*1041</span>) </span> 
+  <span id="visCover" style="top: 1166.1px; width: 344px; height: 1041.67px; left: 8px;"></span> 
+  <!--Webtools Visual  plug-end--> 
+ </body>
+</html>
